@@ -41,7 +41,7 @@ body {
 }
 
 .timer-display {
-    font-size: 2em;
+    font-size: 6rem;
     margin-bottom: 10px;
 }
 
@@ -60,10 +60,6 @@ button {
 button:hover {
     color: #2c1338;
     background: #fce5d8;
-}
-
-.timer-display {
-    font-size: 3.5rem;
 }
 
 /* media queries for different screen sizes */
