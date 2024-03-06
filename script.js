@@ -1,10 +1,10 @@
-var startPause = document.getElementById("start-pause");
-var reset = document.getElementById("reset");
+var start = document.getElementById("start");
+var pause = document.getElementById("pause");
+var finish = document.getElementById("finish");
 var timer = document.getElementById("timer");
 var counter = document.getElementById("counter");
-var isRunning = false;
 var t;
-
+var isRunning = false;
 var startTimestamps = [];
 var pauseTimestamps = [];
 
@@ -33,6 +33,18 @@ function updateTimer() {
 }
 
 function updateCounter() {
+    function formatDuration(seconds) {
+        var formattedHours = Math.floor(seconds / 3600);
+        var formattedMinutes = Math.floor((seconds % 3600) / 60);
+        var formattedSeconds = seconds % 60;
+
+        formattedHours = formattedHours < 10 ? "0" + formattedHours : formattedHours;
+        formattedMinutes = formattedMinutes < 10 ? "0" + formattedMinutes : formattedMinutes;
+        formattedSeconds = formattedSeconds < 10 ? "0" + formattedSeconds : formattedSeconds;
+
+        return formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
+    }
+
     var totalBreak = 0;
 
     for (var i = 1; i < startTimestamps.length; i++) {
@@ -40,47 +52,43 @@ function updateCounter() {
         var pause = pauseTimestamps[i - 1];
         var duration = Math.floor((start - pause) / 1000);
 
-        console.log('start', start, 'pause', pause, 'duration', duration);
-
         totalBreak += duration;
     }
 
     counter.textContent = formatDuration(totalBreak);
 }
 
-function formatDuration(seconds) {
-    var formattedHours = Math.floor(seconds / 3600);
-    var formattedMinutes = Math.floor((seconds % 3600) / 60);
-    var formattedSeconds = seconds % 60;
-
-    formattedHours = formattedHours < 10 ? "0" + formattedHours : formattedHours;
-    formattedMinutes = formattedMinutes < 10 ? "0" + formattedMinutes : formattedMinutes;
-    formattedSeconds = formattedSeconds < 10 ? "0" + formattedSeconds : formattedSeconds;
-
-    return formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
-}
-
-function toggleStartPause() {
+function startTimer() {
     if (!isRunning) {
+        if (seconds === 0 && minutes === 0 && hours === 0) {
+            timer.textContent = "00:00:00"
+            counter.textContent = "00:00:00"
+        }
         isRunning = true;
-        startPause.textContent = "Pause";
+        clearInterval(t);
         startTimestamps.push(new Date().getTime());
         t = setInterval(updateTimer, 1000);
         updateCounter();
-    } else {
-        isRunning = false;
-        startPause.textContent = "Start";
-        clearInterval(t);
-        pauseTimestamps.push(new Date().getTime());
     }
 }
 
-function resetTimer() {
+function pauseTimer() {
     isRunning = false;
-    startPause.textContent = "Start";
     clearInterval(t);
-    timer.textContent = "00:00:00";
-    counter.textContent = "00:00:00";
+    pauseTimestamps.push(new Date().getTime());
+}
+
+function finishTimer() {
+    isRunning = false;
+    clearInterval(t);
+    currTime = new Date().getTime();
+    if (startTimestamps.length === pauseTimestamps.length) {
+        startTimestamps.push(currTime);
+    } else if (startTimestamps.length < pauseTimestamps.length) {
+        startTimestamps.push(currTime);
+        pauseTimestamps.push(currTime);
+    }
+    updateCounter();
     seconds = 0;
     minutes = 0;
     hours = 0;
@@ -88,5 +96,6 @@ function resetTimer() {
     pauseTimestamps = [];
 }
 
-startPause.addEventListener("click", toggleStartPause);
-reset.addEventListener("click", resetTimer);
+start.addEventListener("click", startTimer);
+pause.addEventListener("click", pauseTimer);
+finish.addEventListener("click", finishTimer);
