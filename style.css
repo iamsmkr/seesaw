@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -17,25 +18,35 @@ body {
 
 .container {
     display: flex;
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Center children vertically */
-    align-items: center; /* Center children horizontally */
-    height: 100vh; /* Full viewport height */
-    width: 100vw; /* Full viewport width */
+    flex-direction: column;
+    /* Stack children vertically */
+    justify-content: center;
+    /* Center children vertically */
+    align-items: center;
+    /* Center children horizontally */
+    height: 100vh;
+    /* Full viewport height */
+    width: 100vw;
+    /* Full viewport width */
 }
 
 .timers-container {
-    display: flex; /* Use flexbox to arrange child elements side by side */
-    justify-content: center; /* Center the child elements horizontally */
-    align-items: center; /* Center the child elements vertically */
-    flex-wrap: wrap; /* Allow items to wrap onto the next line */
+    display: flex;
+    /* Use flexbox to arrange child elements side by side */
+    justify-content: center;
+    /* Center the child elements horizontally */
+    align-items: center;
+    /* Center the child elements vertically */
+    flex-wrap: wrap;
+    /* Allow items to wrap onto the next line */
     height: 100%;
     width: 100%;
 }
 
 .timer-container {
     text-align: center;
-    margin: 0 20px; /* Adjust the space between the timer containers */
+    margin: 0 20px;
+    /* Adjust the space between the timer containers */
     top: 50%;
     left: 50%;
 }
@@ -62,25 +73,102 @@ button:hover {
     background: #fce5d8;
 }
 
+#settings-btn {
+    display: none;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid black;
+}
+
+#settings-modal {
+    width: 300px;
+    font-family: "Rubik";
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #F7F6F3;
+    color: black;
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 9999;
+}
+
+#settings-modal h3 {
+    margin-bottom: 10px;
+}
+
+#settings-modal label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#settings-modal select {
+    margin-bottom: 10px;
+}
+
+#settings-modal .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#settings-modal .settings-btn {
+    flex-basis: 48%;
+}
+
+.settings-btn {
+    /* A reset of styles, including removing the default dropdown arrow */
+    appearance: none;
+    /* Additional resets for further consistency */
+    background-color: white;
+    border: none;
+    margin: 10px;
+    width: 60%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+}
+
+#save-settings {
+    color: black;
+    border: 1px solid #fff;
+}
+
+#cancel-settings {
+    color: black;
+    background: white;
+    border: 1px solid #fff;
+}
+
+
 /* media queries for different screen sizes */
 @media (max-width: 768px) {
-    .timer-btn, #settings-btn {
-      font-size: 0.7rem;
-      padding: 0.25rem 0.5rem;
-      margin: 0.125rem;
+
+    .timer-btn,
+    #settings-btn {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+        margin: 0.125rem;
     }
 }
 
 @media (max-width: 480px) {
     #container {
-        flex-direction: column; /* Stack the child elements vertically */
+        flex-direction: column;
+        /* Stack the child elements vertically */
     }
 
     .content {
-        margin: 10px 0; /* Adjust the space between the timer containers for vertical stacking */
+        margin: 10px 0;
+        /* Adjust the space between the timer containers for vertical stacking */
     }
 
-    .timer-btn, #settings-btn {
+    .timer-btn,
+    #settings-btn {
         font-size: 0.7rem;
         padding: 0.125rem 0.25rem;
         margin: 0.125rem;

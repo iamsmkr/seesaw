@@ -1,33 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Seesaw</title>
-        <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="./style.css">
-    </head>
 
-    <body>
-        <div class="container">
-            <div>
-                <div class="timers-container">
-                    <div class="timer-container">
-                        <div class="timer-display" id="timer">00:00:00</div>
-                    </div>
-                    <div class="timer-container">
-                        <div class="timer-display" id="counter">00:00:00</div>
-                    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seesaw</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <div class="timers-container">
+                <div class="timer-container">
+                    <div class="timer-display" id="timer">00:00:00</div>
                 </div>
-                <div class="timer-btns-container">
-                    <button class="timer-btn" id="start">Start</button>
-                    <button class="timer-btn" id="pause">Pause</button>
-                    <button class="timer-btn" id="finish">Finish</button>
+                <div class="timer-container">
+                    <div class="timer-display" id="counter">00:00:00</div>
                 </div>
             </div>
+            <div class="timer-btns-container">
+                <button class="timer-btn" id="start">Start</button>
+                <button class="timer-btn" id="pause">Pause</button>
+                <button class="timer-btn" id="finish">Finish</button>
+            </div>
         </div>
-    
+        <!-- </div> -->
+
+        <button id="settings-btn">Settings</button>
+        <div id="settings-modal">
+            <h3>Customize Seesaw</h3>
+            <label for="background-color">Choose the Background Color:</label>
+            <select id="background-color">
+                <optgroup label="Light Mode">
+                    <option value="#FFFFFF">Default White</option>
+                    <option value="#F7F6F3">Off White</option>
+                    <option value="#F1F1EF">Notion Grey</option>
+                    <option value="#F4EEEE">Notion Brown</option>
+                    <option value="#FAEBDD">Notion Orange</option>
+                    <option value="#FBF3DB">Notion Yellow</option>
+                    <option value="#EDF3EC">Notion Green</option>
+                    <option value="#E7F3F8">Notion Blue</option>
+                    <option value="#F6F3F9">Notion Purple</option>
+                    <option value="#FAF1F5">Notion Pink</option>
+                    <option value="#FDEBEC">Notion Red</option>
+                </optgroup>
+                <optgroup label="Dark Mode">
+                    <option value="#191919">Default</option>
+                    <option value="#262626">Hover</option>
+                    <option value="#202020">Sidebar</option>
+                    <option value="#434040">Notion Brown</option>
+                    <option value="#594A3A">Notion Orange</option>
+                    <option value="#FDEBB9">Notion Yellow</option>
+                    <option value="#D6FAD8">Notion Green</option>
+                    <option value="#364954">Notion Blue</option>
+                    <option value="#443F57">Notion Purple</option>
+                    <option value="#533B4C">Notion Pink</option>
+                    <option value="#594141">Notion Red</option>
+                </optgroup>
+            </select>
+            
+            <label for="font-color">Choose the Font Color:</label>
+            <select id="font-color">
+                <optgroup label="Light Mode">
+                    <option value="#37352F">Notion Default</option>
+                    <option value="#787774">Notion Grey</option>
+                    <option value="#9F6B53">Notion Brown</option>
+                    <option value="#D9730D">Notion Orange</option>
+                    <option value="#CB912F">Notion Yellow</option>
+                    <option value="#448361">Notion Green</option>
+                    <option value="#337EA9">Notion Blue</option>
+                    <option value="#9065B0">Notion Purple</option>
+                    <option value="#C14C8A">Notion Pink</option>
+                    <option value="#D44C47">Notion Red</option>
+                </optgroup>
+                <optgroup label="Dark Mode">
+                    <option value="#979A9B">Notion Grey</option>
+                    <option value="#D4D4D4">White</option>
+                    <option value="#937264">Notion Brown</option>
+                    <option value="#FFA344">Notion Orange</option>
+                    <option value="#FFDC49">Notion Yellow</option>
+                    <option value="#4DAB9A">Notion Green</option>
+                    <option value="#529CCA">Notion Blue</option>
+                    <option value="#9A6DD7">Notion Purple</option>
+                    <option value="#E255A1">Notion Pink</option>
+                    <option value="#FF7369">Notion Red</option>
+                </optgroup>
+            </select>
+            
+            <div class="buttons-container">
+                <button id="save-settings" class="settings-btn">Save</button>
+                <button id="cancel-settings" class="settings-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
     <!-- Include your script.js here -->
     <script src="script.js"></script>
-    </body>
+</body>
+
 </html>
