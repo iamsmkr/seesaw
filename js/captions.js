@@ -14,6 +14,18 @@ var Captions = (function () {
         }
     }
 
+    timerCaption.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
+    
+    counterCaption.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
+
     timerCaption.addEventListener('blur', function () {
         saveCaption('timerCaption');
     });
