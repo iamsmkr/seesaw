@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seesaw</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
@@ -14,9 +14,11 @@
         <div>
             <div class="timers-container">
                 <div class="timer-container">
+                    <div class="timer-caption" contenteditable="true" id="timerCaption">Study</div>
                     <div class="timer-display" id="timer">00:00:00</div>
                 </div>
                 <div class="timer-container">
+                    <div class="timer-caption" contenteditable="true" id="counterCaption">Break</div>
                     <div class="timer-display" id="counter">00:00:00</div>
                 </div>
             </div>
@@ -26,7 +28,6 @@
                 <button class="timer-btn" id="finish">Finish</button>
             </div>
         </div>
-        <!-- </div> -->
 
         <button id="settings-btn">Settings</button>
         <div id="settings-modal">
@@ -60,7 +61,7 @@
                     <option value="#594141">Notion Red</option>
                 </optgroup>
             </select>
-            
+
             <label for="font-color">Choose the Font Color:</label>
             <select id="font-color">
                 <optgroup label="Light Mode">
@@ -88,7 +89,7 @@
                     <option value="#FF7369">Notion Red</option>
                 </optgroup>
             </select>
-            
+
             <div class="buttons-container">
                 <button id="save-settings" class="settings-btn">Save</button>
                 <button id="cancel-settings" class="settings-btn">Cancel</button>
@@ -96,7 +97,10 @@
         </div>
     </div>
     <!-- Include your script.js here -->
-    <script src="script.js"></script>
+    <script src="js/settings.js" defer></script>
+    <script src="js/timer.js" defer></script>
+    <script src="js/captions.js" defer></script>
+    <script src="js/main.js" defer></script>
 </body>
 
 </html>

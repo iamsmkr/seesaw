@@ -56,6 +56,16 @@ body {
     margin-bottom: 10px;
 }
 
+.timer-caption {
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 5px;
+    border: none; /* Remove borders */
+    outline: none; /* Remove focus outline */
+    background-color: transparent; /* Ensure the background is transparent */
+    cursor: text; /* Change cursor to indicate text can be edited */
+}
+
 button {
     padding: 10px 30px;
     background: none;
