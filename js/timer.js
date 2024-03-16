@@ -41,7 +41,11 @@ var Timer = (function () {
                 (minutes < 10 ? "0" : "") + minutes + ":" +
                 (seconds < 10 ? "0" : "") + seconds;
 
-            console.log(formatDate(new Date(start)), '|', formatDate(new Date(pause)), '|', durationStr, '|', !isRunning ? activity : inactivity);
+            console.log(
+                isRunning
+                    ? formatDate(new Date(pause)) + ' | ' + formatDate(new Date(start)) + ' | ' + durationStr + ' | ' + (isRunning ? activity : inactivity)
+                    : formatDate(new Date(start)) + ' | ' + formatDate(new Date(pause)) + ' | ' + durationStr + ' | ' + (isRunning ? activity : inactivity)
+            );
         }
     }
 
