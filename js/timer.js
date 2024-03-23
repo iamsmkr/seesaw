@@ -43,8 +43,8 @@ var Timer = (function () {
 
             console.log(
                 isRunning
-                    ? formatDate(new Date(pause)) + ' | ' + formatDate(new Date(start)) + ' | ' + durationStr + ' | ' + (isRunning ? activity : inactivity)
-                    : formatDate(new Date(start)) + ' | ' + formatDate(new Date(pause)) + ' | ' + durationStr + ' | ' + (isRunning ? activity : inactivity)
+                    ? formatDate(new Date(pause)) + ' | ' + formatDate(new Date(start)) + ' | ' + durationStr + ' | ' + inactivity
+                    : formatDate(new Date(start)) + ' | ' + formatDate(new Date(pause)) + ' | ' + durationStr + ' | ' + activity
             );
         }
     }
