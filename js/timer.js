@@ -5,134 +5,48 @@ var Timer = (function () {
     var timer = document.getElementById("timer");
     var counter = document.getElementById("counter");
 
-    var isRunning = false;
-    var startTimestamps = [];
-    var pauseTimestamps = [];
+    const updateDisplay = (ref, { hours, minutes, seconds }) => {
+        var formattedHours = hours < 10 ? "0" + hours : hours;
+        var formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+        var formattedSeconds = seconds < 10 ? "0" + seconds : seconds;
 
-    function logActivity() {
-        var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-
-        var activity = "Study";
-        var inactivity = "Break";
-
-        function formatDate(date) {
-            var formattedDate =
-                weekdays[date.getDay()] + ', ' +
-                date.getDate() + ' ' +
-                months[date.getMonth()] + ' ' +
-                date.getFullYear() + ' ' +
-                date.getHours().toString().padStart(2, '0') + ':' +
-                date.getMinutes().toString().padStart(2, '0') + ':' +
-                date.getSeconds().toString().padStart(2, '0');
-            return formattedDate;
-        }
-
-        var start = startTimestamps[startTimestamps.length - 1] || 0;
-        var pause = pauseTimestamps[pauseTimestamps.length - 1] || 0;
-        if (startTimestamps.length !== 0 && pauseTimestamps.length !== 0) {
-            var duration = Math.abs(pause - start);
-            var hours = Math.floor(duration / (1000 * 60 * 60));
-            var minutes = Math.floor((duration % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((duration % (1000 * 60)) / 1000);
-
-            var durationStr =
-                (hours < 10 ? "0" : "") + hours + ":" +
-                (minutes < 10 ? "0" : "") + minutes + ":" +
-                (seconds < 10 ? "0" : "") + seconds;
-
-            console.log(
-                isRunning
-                    ? formatDate(new Date(pause)) + ' | ' + formatDate(new Date(start)) + ' | ' + durationStr + ' | ' + inactivity
-                    : formatDate(new Date(start)) + ' | ' + formatDate(new Date(pause)) + ' | ' + durationStr + ' | ' + activity
-            );
-        }
-    }
-
-    function updateCounter() {
-        function formatDuration(seconds) {
-            var formattedHours = Math.floor(seconds / 3600);
-            var formattedMinutes = Math.floor((seconds % 3600) / 60);
-            var formattedSeconds = seconds % 60;
-
-            formattedHours = formattedHours < 10 ? "0" + formattedHours : formattedHours;
-            formattedMinutes = formattedMinutes < 10 ? "0" + formattedMinutes : formattedMinutes;
-            formattedSeconds = formattedSeconds < 10 ? "0" + formattedSeconds : formattedSeconds;
-
-            return formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
-        }
-
-        var totalBreak = 0;
-
-        for (var i = 1; i < startTimestamps.length; i++) {
-            var start = startTimestamps[i];
-            var pause = pauseTimestamps[i - 1] || 0;
-            var duration = Math.floor((start - pause) / 1000);
-
-            totalBreak += duration;
-        }
-
-        counter.textContent = formatDuration(totalBreak);
-    }
+        ref.textContent = formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
+    };
 
     var worker = new Worker('js/timerWorker.js');
 
-    worker.onmessage = function (event) {
-        var data = event.data;
-        updateDisplay(data);
+    worker.onmessage = function ({ data }) {
+        switch (data.type) {
+            case 'timer':
+                updateDisplay(timer, data.time);
+                break;
+            case 'counter':
+                updateDisplay(counter, data.time);
+                break;
+            default:
+                console.log('Timer type is not recognized');
+        }
     };
 
-    function updateDisplay(data) {
-        var formattedHours = data.hours < 10 ? "0" + data.hours : data.hours;
-        var formattedMinutes = data.minutes < 10 ? "0" + data.minutes : data.minutes;
-        var formattedSeconds = data.seconds < 10 ? "0" + data.seconds : data.seconds;
-        timer.textContent = formattedHours + ":" + formattedMinutes + ":" + formattedSeconds;
-    }
+    const startTimer = () => {
+        worker.postMessage({ command: 'start' });
+    };
 
-    function startTimer() {
-        if (!isRunning) {
-            isRunning = true;
-            startTimestamps.push(new Date().getTime());
-            worker.postMessage({ command: 'start' });
-            updateCounter();
-            logActivity();
-        }
-    }
+    const pauseTimer = () => {
+        worker.postMessage({ command: 'pause' });
+    };
 
-    function pauseTimer() {
-        if (isRunning) {
-            isRunning = false;
-            pauseTimestamps.push(new Date().getTime());
-            worker.postMessage({ command: 'pause' });
-            logActivity();
-        }
-    }
-
-    function finishTimer() {
-        isRunning = false;
-        currTime = new Date().getTime();
-        if (startTimestamps.length === pauseTimestamps.length) {
-            startTimestamps.push(currTime);
-        } else if (startTimestamps.length < pauseTimestamps.length) {
-            startTimestamps.push(currTime);
-            pauseTimestamps.push(currTime);
-        } else {
-            pauseTimestamps.push(currTime);
-        }
-        updateCounter();
-        logActivity();
+    const finishTimer = () => {
         worker.postMessage({ command: 'finish' });
-        startTimestamps = [];
-        pauseTimestamps = [];
-    }
+    };
 
     start.addEventListener("click", startTimer);
     pause.addEventListener("click", pauseTimer);
     finish.addEventListener("click", finishTimer);
 
     return {
-        startTimer: startTimer,
-        pauseTimer: pauseTimer,
-        finishTimer: finishTimer
+        startTimer,
+        pauseTimer,
+        finishTimer
     };
 })();
