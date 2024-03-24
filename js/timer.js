@@ -1,3 +1,8 @@
+import { 
+    COMMAND,
+    TIMER_TYPE,
+} from './constants.js';
+
 var Timer = (function () {
     var start = document.getElementById("start");
     var pause = document.getElementById("pause");
@@ -17,10 +22,10 @@ var Timer = (function () {
 
     worker.onmessage = function ({ data }) {
         switch (data.type) {
-            case 'timer':
+            case TIMER_TYPE.TIMER:
                 updateDisplay(timer, data.time);
                 break;
-            case 'counter':
+            case TIMER_TYPE.COUNTER:
                 updateDisplay(counter, data.time);
                 break;
             default:
@@ -29,15 +34,15 @@ var Timer = (function () {
     };
 
     const startTimer = () => {
-        worker.postMessage({ command: 'start' });
+        worker.postMessage({ command: COMMAND.START });
     };
 
     const pauseTimer = () => {
-        worker.postMessage({ command: 'pause' });
+        worker.postMessage({ command: COMMAND.PAUSE });
     };
 
     const finishTimer = () => {
-        worker.postMessage({ command: 'finish' });
+        worker.postMessage({ command: COMMAND.FINISH });
     };
 
     start.addEventListener("click", startTimer);
